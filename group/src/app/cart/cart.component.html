@@ -1,0 +1,51 @@
+<div id="modal" class="modal">
+  <div *ngIf='emptyCart==true'>
+    <div class="modal-content emptycart ">
+      <h3>CART IS EMPTY, NO ITEMS TO SHOW 😐</h3>
+      <br />
+      <br />
+      <br />
+      <br />
+      <button class="btn btn-success text-center " (click)="close()">Add Some Items to Cart 🛒</button>
+
+    </div>
+  </div>
+  <div class="modal-content" *ngIf='emptyCart==false'>
+    <span class="cartHeading">Your Cart</span>
+    <span style="color: red;">
+      <hr />
+    </span>
+    <div *ngFor="let detail of cartDetails">
+      <p class="close" data-toggle="tooltip" data-placement="left" title="remove {{detail.title}} from cart"
+        (click)=removeItemFromCart(detail)> X </p>
+      <p class="title">Title : {{detail.title}}</p>
+      <p class="author">Author : {{detail.authors}}</p>
+      <p class="title">Rating : <rating class="rating" [(ngModel)]="detail.average_rating" [readonly]="true">
+        </rating>
+      </p>
+      <p class="price">Price : ₹ {{detail.price}}</p>
+      <p>Language : {{detail.language_code}}</p>
+      <p>Isbn : {{detail.isbn}}</p>
+
+      <span style="color: red;">
+        <hr />
+      </span>
+
+    </div>
+   <div>
+    <p><span class="title"> Total Items: {{cartDetails.length}}</span> <span class="title totalitems"> Total Amount Payable :<span class="price"> ₹ {{payable}}</span></span></p>
+   </div>
+    <div class="btn-group" role="group" aria-label="Third group">
+      <button type="button" class="btn btn-secondary" (click)="close()">close <span
+          style="color: red;">X</span></button> | |
+      <button type="button" class="btn btn-success" (click)="paymentDone()">Proceed for Payment of {{payable}}</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="payed">
+<ngx-spinner bdColor = "rgba(fafafa, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "false"><p style="color: rgb(39, 25, 233);font-size: 20px; font-weight: bolder;" > Processing your Payment... </p></ngx-spinner>
+</div>
+
+<div *ngIf="routeback">
+  <ngx-spinner bdColor = "rgba(fafafa, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "false"><p style="color: rgb(78, 187, 15);font-size: 20px; font-weight: bolder;" > Routing you back to Home... </p></ngx-spinner>
+</div>

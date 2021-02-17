@@ -1,0 +1,91 @@
+<div>
+    <ngx-spinner bdColor = "rgba(fafafa, 0, 0, 0.8)" size = "large" color = "#fff" type = "rotating dot" [fullScreen] = "false"><p style="color: rgb(78, 187, 15);font-size: 20px; font-weight: bolder;" > Loading ... your patience is appriciated </p></ngx-spinner>
+  </div>
+<div class="banner" id="banner">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-sm-7">
+                <input class="form-control mr-sm-2 searchbar" type="search"
+                    placeholder="Search books on ID/AUTHOR/TITLE or ISBN" [(ngModel)]="searchedText"
+                    aria-label="Search">
+            </div>
+            <div class="col-sm-3">
+                <select [(ngModel)]="selected" (change)="sortRatings(selected)" class="sort">
+                    <option *ngFor="let sort of sortOptions" [ngValue]="sort.disp">{{sort.disp}}</option>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <div data-toggle="tooltip" data-placement="left" title="Check your Cart" class="cart btn"
+                    (click)="routeToCart()">🛒<sup class="cartitem">{{cartItemCount}}</sup></div>
+            </div>
+        </div>
+    </div>
+    <div>
+    </div>
+</div>
+<div style="height: 70px;">
+</div>
+
+<div class="container">
+    <div class="card mb-3 " *ngFor="let item of (BookDetails | keyvalue)|Search:searchedText |
+    paginate: { itemsPerPage:20, currentPage: p }; let i = index " (click)="userSelectionToCart(item)">
+        <div class="card-body">
+            <p><span class="itemTitles">Book ID</span> : {{item.value.bookID}}</p>
+            <p><span class="itemTitles">Title</span> : {{item.value.title}}</p>
+            <p><span class="itemTitles">Author</span> : {{item.value.authors}}</p>
+            <p class="heading">Rating : <rating class="rating" [(ngModel)]="item.value.average_rating" fullIcon="★"
+                    emptyIcon="☆" [readonly]="true">
+                </rating>
+            </p>
+            <p><span class="itemTitles">ISBN</span> : {{item.value.isbn}}</p>
+            <p><span class="itemTitles">Language</span>: {{item.value.language_code}}</p>
+            <p><span class="itemTitles">Rate</span>: {{item.value.rate}}</p>
+            <p class="price">Price : ₹ {{item.value.price}}</p>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="col-md-12">
+    <div class="row">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-6">
+            <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+        </div>
+
+        <div class="col-sm-3">
+        </div>
+
+    </div>
+    </div>
+</div>
+<div *ngIf="rowSelected===true ">
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <p class="title">Title : {{cartItem.value.title}}</p>
+            <p class="author">Author : {{cartItem.value.authors}}</p>
+            <p class="title">Rating : <rating class="rating" [(ngModel)]="cartItem.value.average_rating"
+                    [readonly]="true">
+                </rating>
+            </p>
+            <p class="price">Price : {{cartItem.value.price}}</p>
+            <p>Language : {{cartItem.value.language_code}}</p>
+            <div class="btn-group" role="group" aria-label="Third group">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close <span
+                        class="closeIcon">X</span></button> &nbsp; &nbsp;
+                <button type="button" class="btn btn-success" (click)="addToCart()">Add to cart <span
+                        class="cartIcon">🛒</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #editModal let-modal>
+
+
+    <div id="modal" class="modal">
+        <div class="modal-content modal-body">
+            <h6 class="msg">Successfully Added to cart <span class="tickmark"> ✔️</span></h6>
+        </div>
+    </div>
+</ng-template>

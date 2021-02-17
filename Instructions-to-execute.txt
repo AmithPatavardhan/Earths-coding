@@ -1,0 +1,17 @@
+					steps to run the application
+
+note : THIS IS A ANGUALR BASED WEB APPLICATION, BETTER TO USE VS CODE as a editor and adviced
+
+1.unzip the application. (angular Application)
+
+2.open the application in any of the editors (like vs code ).
+
+3.open the SRC folder in this folder in editor's terminal  by right clicking on src > open in integrated terminal   ( looks like...    desktop/group/src).
+
+4.when the terminal is ready run the command 'npm install'
+
+5.once install is done run 'npm start'
+
+6. go to any of the web browser and type 'localhost:4200' in URL
+
+7. application starts running on the browser
